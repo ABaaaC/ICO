@@ -233,18 +233,21 @@ export default function Home() {
   }
 
   useEffect(() => {
+    console.log(walletConnected);
     if (!walletConnected) {
       web3ModalRef.current = new Web3Modal({
         network: "goerli",
         providerOptions: {},
         disableInjectedProvider: false
       })
+      // connectWallet();
+      // withdrawCoins();
+    } else {
+      getBalanceOfCryptoDevTokens();
+      getTotalTokensMinted();
+      getTokensToBeClaimed();
+      getOwner();
     }
-    connectWallet();
-    getBalanceOfCryptoDevTokens();
-    getTotalTokensMinted();
-    getTokensToBeClaimed();
-    getOwner();
   }, [walletConnected]);
 
   function renderLoading() {
@@ -272,7 +275,7 @@ export default function Home() {
     // { display: "flex-col" }
     return (
       <div style={{ display: "flex-col" }}>
-      {/* // <div> */}
+        {/* // <div> */}
         <div>
           <input
             type="number"
@@ -354,7 +357,7 @@ export default function Home() {
           {renderDescription()}
         </div>
         <div>
-          <img className={styles.image} src='./0.svg'/>
+          <img className={styles.image} src='./0.svg' />
         </div>
 
       </div>
