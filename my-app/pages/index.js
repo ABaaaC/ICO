@@ -213,23 +213,19 @@ export default function Home() {
   }
 
   const getProviderOrSigner = async (needSigner = false) => {
-    try {
-      const provider = await web3ModalRef.current.connect();
-      const web3Provider = new ethers.providers.Web3Provider(provider);
+    const provider = await web3ModalRef.current.connect();
+    const web3Provider = new ethers.providers.Web3Provider(provider);
 
-      const { chainId } = await web3Provider.getNetwork();
-      if (chainId !== 5) {
-        window.alert("Please, change the network to the Goerli!" + chainId);
-        throw new Error("Incorrect network: " + chainId);
-      }
-
-      if (needSigner) {
-        return web3Provider.getSigner();
-      }
-      return web3Provider;
-    } catch (e) {
-      console.error(e);
+    const { chainId } = await web3Provider.getNetwork();
+    if (chainId !== 5) {
+      window.alert("Please, change the network to the Goerli!" + chainId);
+      throw new Error("Incorrect network: " + chainId);
     }
+
+    if (needSigner) {
+      return web3Provider.getSigner();
+    }
+    return web3Provider;
   }
 
   useEffect(() => {
@@ -243,6 +239,7 @@ export default function Home() {
       // connectWallet();
       // withdrawCoins();
     } else {
+      getProviderOrSigner();
       getBalanceOfCryptoDevTokens();
       getTotalTokensMinted();
       getTokensToBeClaimed();
